@@ -7,11 +7,11 @@ using UnityEngine;
 public class Character : LivingObject
 {
     [SerializeField]
-    Lore lore;
+    protected Lore lore;
     [SerializeField, Range(0.1f, 15f)]
-    float moveSpeed = 5f;
-    GameInputs gameInputs;
-    Animator anim;
+    protected float moveSpeed = 5f;
+    protected GameInputs gameInputs;
+    protected Animator anim;
 
     void Awake()
     {
@@ -35,12 +35,10 @@ public class Character : LivingObject
     }
     protected virtual void Movement ()
     {
-        transform.Translate(Axis.magnitude * Vector3.forward * moveSpeed * Time.deltaTime);
-        FacingDirection();
-        SendMovementState();
+        
     }
 
-    void FacingDirection()
+    protected void FacingDirection()
     {
         if(IsMoving)
         {
@@ -48,11 +46,11 @@ public class Character : LivingObject
         }
     }
 
-    void SendMovementState() => anim.SetFloat("Move", Mathf.Abs(Axis.magnitude));
+    
 
     Quaternion RotationDirection => Quaternion.LookRotation(Axis);
 
-    bool IsMoving => Axis != Vector3.zero;
+    protected bool IsMoving => Axis != Vector3.zero;
 
-    Vector3 Axis => new Vector3(gameInputs.Gameplay.Horizontal.ReadValue<float>(), 0f, gameInputs.Gameplay.Vertical.ReadValue<float>());
+    protected Vector3 Axis => new Vector3(gameInputs.Gameplay.Horizontal.ReadValue<float>(), 0f, gameInputs.Gameplay.Vertical.ReadValue<float>());
 }
