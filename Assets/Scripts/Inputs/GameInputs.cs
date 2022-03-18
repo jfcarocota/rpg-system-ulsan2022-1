@@ -44,6 +44,15 @@ public partial class @GameInputs : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""ChangeJob"",
+                    ""type"": ""Button"",
+                    ""id"": ""faca498d-f838-42ec-ad82-4cd97809eb8d"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -112,6 +121,17 @@ public partial class @GameInputs : IInputActionCollection2, IDisposable
                     ""action"": ""Vertical"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6cc6f68a-72da-463c-8e7c-5f8033959584"",
+                    ""path"": ""<Keyboard>/enter"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ChangeJob"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -144,6 +164,7 @@ public partial class @GameInputs : IInputActionCollection2, IDisposable
         m_Gameplay = asset.FindActionMap("Gameplay", throwIfNotFound: true);
         m_Gameplay_Horizontal = m_Gameplay.FindAction("Horizontal", throwIfNotFound: true);
         m_Gameplay_Vertical = m_Gameplay.FindAction("Vertical", throwIfNotFound: true);
+        m_Gameplay_ChangeJob = m_Gameplay.FindAction("ChangeJob", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -205,12 +226,14 @@ public partial class @GameInputs : IInputActionCollection2, IDisposable
     private IGameplayActions m_GameplayActionsCallbackInterface;
     private readonly InputAction m_Gameplay_Horizontal;
     private readonly InputAction m_Gameplay_Vertical;
+    private readonly InputAction m_Gameplay_ChangeJob;
     public struct GameplayActions
     {
         private @GameInputs m_Wrapper;
         public GameplayActions(@GameInputs wrapper) { m_Wrapper = wrapper; }
         public InputAction @Horizontal => m_Wrapper.m_Gameplay_Horizontal;
         public InputAction @Vertical => m_Wrapper.m_Gameplay_Vertical;
+        public InputAction @ChangeJob => m_Wrapper.m_Gameplay_ChangeJob;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -226,6 +249,9 @@ public partial class @GameInputs : IInputActionCollection2, IDisposable
                 @Vertical.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnVertical;
                 @Vertical.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnVertical;
                 @Vertical.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnVertical;
+                @ChangeJob.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnChangeJob;
+                @ChangeJob.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnChangeJob;
+                @ChangeJob.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnChangeJob;
             }
             m_Wrapper.m_GameplayActionsCallbackInterface = instance;
             if (instance != null)
@@ -236,6 +262,9 @@ public partial class @GameInputs : IInputActionCollection2, IDisposable
                 @Vertical.started += instance.OnVertical;
                 @Vertical.performed += instance.OnVertical;
                 @Vertical.canceled += instance.OnVertical;
+                @ChangeJob.started += instance.OnChangeJob;
+                @ChangeJob.performed += instance.OnChangeJob;
+                @ChangeJob.canceled += instance.OnChangeJob;
             }
         }
     }
@@ -253,5 +282,6 @@ public partial class @GameInputs : IInputActionCollection2, IDisposable
     {
         void OnHorizontal(InputAction.CallbackContext context);
         void OnVertical(InputAction.CallbackContext context);
+        void OnChangeJob(InputAction.CallbackContext context);
     }
 }
