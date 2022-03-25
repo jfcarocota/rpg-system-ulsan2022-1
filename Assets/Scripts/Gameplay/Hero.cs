@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
+[RequireComponent(typeof(InputsController))]
 public class Hero : Character, IHostile
 {
     [SerializeField]
@@ -14,32 +16,41 @@ public class Hero : Character, IHostile
     float leaderMinDistance;
 
     bool IsFollowing = false;
-    Vector3 lastPostion;
+
+    [SerializeField]
+    Vector2 minMaxAngle;
+    protected float movementValue;
+    protected InputsController inputsController;
+
+    new void Awake()
+    {
+        base.Awake();
+        inputsController = GetComponent<InputsController>();
+    }
 
     void Start()
     {
-        ChangeJob(jobsOptions);
-        gameInputs.Gameplay.ChangeJob.performed += _=> ChangeJob(jobsOptions);
+        agent.speed = moveSpeed;
+        agent.stoppingDistance = leaderMinDistance;
+        agent.enabled = !ImLeader;
     }
 
     protected override void Movement()
     {
-        lastPostion = transform.position;
+        Hero leader = Gamemanager.Instance.CurrentGameMode.GetPartyLeader.GetComponent<Hero>();
+
         if(ImLeader)
         {
-            IsFollowing = false;
+            //IsFollowing = false;
             base.Movement();
-            transform.Translate(Axis.normalized.magnitude * Vector3.forward * moveSpeed * Time.deltaTime);
+            transform.Translate(inputsController.Axis.normalized.magnitude * Vector3.forward * moveSpeed * Time.deltaTime);
             FacingDirection();
+            movementValue = leader.IsMoving ? 1 : 0f;
         }
         else
         {
-            if(CanMoveToleader)
-            {
-                transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime);
-                transform.LookAt(Gamemanager.Instance.CurrentGameMode.GetPartyLeader);
-            }
-            IsFollowing = transform.position - lastPostion != Vector3.zero;
+            agent.destination = leader.transform.position;
+            movementValue = agent.velocity != Vector3.zero ? 1 : 0f;
         }
     }
 
@@ -58,32 +69,28 @@ public class Hero : Character, IHostile
         return damage;
     }
 
-    void ChangeJob(JobsOptions job)
-    {
-        if(currentJob)
-        {
-            Destroy(currentJob);
-        }
-        switch(job)
-        {
-            case JobsOptions.MAGE:
-            currentJob = gameObject.AddComponent<Mage>();
-            break;
-            case JobsOptions.ARCHER:
-            currentJob = gameObject.AddComponent<Archer>();
-            break;
-            case JobsOptions.WARRIOR:
-            currentJob = gameObject.AddComponent<Warrior>();
-            break;
-        }
-    }
-
 /// <summary>
 /// Checks if you are the leader of the party.
 /// </summary>
 /// <returns>Returns a true/false depending of the comparing with leader transform.</returns>
     public bool ImLeader => Gamemanager.Instance.CurrentGameMode.CompareToLeader(transform);
-    public bool CanMoveToleader => Vector3.Distance(transform.position, Gamemanager.Instance.CurrentGameMode.GetPartyLeader.position) > leaderMinDistance;
 
-    protected float MovementValue => ImLeader ? Mathf.Abs(Axis.magnitude) : CanMoveToleader ? Mathf.Abs(Axis.magnitude) :  IsFollowing ? Mathf.Abs(Axis.magnitude) : 0f;
+    protected void FacingDirection()
+    {
+        if(IsMoving)
+        {
+            transform.rotation = RotationDirection;
+        }
+    }
+
+    Quaternion RotationDirection => Quaternion.LookRotation(inputsController.Axis);
+
+    public bool IsMoving => inputsController.Axis != Vector3.zero;
+
+    public CharacterJob CurrentJob{get => currentJob; set => currentJob = value;}
+    public JobsOptions GetJobsOptions => jobsOptions;
+    public NavMeshAgent GetAgent => agent;
+
+    public InputsController GetInputsController => inputsController;
+
 }

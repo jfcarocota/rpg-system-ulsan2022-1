@@ -9,7 +9,7 @@ public class Lisa : Hero
     {
         base.Movement();
 
-        anim.SetFloat("move", MovementValue);
+        anim.SetFloat("move", movementValue);
 
         /*if(ImLeader || (!ImLeader && CanMoveToleader))
         {

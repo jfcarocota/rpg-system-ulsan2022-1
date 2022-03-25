@@ -1,36 +1,30 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 [RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(CapsuleCollider))]
+[RequireComponent(typeof(NavMeshAgent))]
 public class Character : LivingObject
 {
     [SerializeField]
     protected Lore lore;
     [SerializeField, Range(0.1f, 15f)]
     protected float moveSpeed = 5f;
-    protected GameInputs gameInputs;
     protected Animator anim;
+    protected Vector3 lastPostion;
+    protected NavMeshAgent agent;
 
-    void Awake()
+    protected void Awake()
     {
-        gameInputs = new GameInputs();
         anim = GetComponent<Animator>();
-    }
-
-    void OnEnable()
-    {
-        gameInputs.Enable();
-    }
-
-    void OnDisable()
-    {
-        gameInputs.Disable();
+        agent = GetComponent<NavMeshAgent>();
     }
 
     protected void Update()
     {
+        lastPostion = transform.position;
         Movement();
     }
     protected virtual void Movement ()
@@ -38,19 +32,5 @@ public class Character : LivingObject
         
     }
 
-    protected void FacingDirection()
-    {
-        if(IsMoving)
-        {
-            transform.rotation = RotationDirection;
-        }
-    }
-
-    
-
-    Quaternion RotationDirection => Quaternion.LookRotation(Axis);
-
-    protected bool IsMoving => Axis != Vector3.zero;
-
-    protected Vector3 Axis => new Vector3(gameInputs.Gameplay.Horizontal.ReadValue<float>(), 0f, gameInputs.Gameplay.Vertical.ReadValue<float>());
+    public bool IsTranslating => transform.position - lastPostion != Vector3.zero;
 }

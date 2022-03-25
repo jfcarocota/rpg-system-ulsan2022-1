@@ -53,6 +53,15 @@ public partial class @GameInputs : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ChangeLeader"",
+                    ""type"": ""Value"",
+                    ""id"": ""9abb4420-5790-4465-9f73-ee2773e9c4b9"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -132,6 +141,17 @@ public partial class @GameInputs : IInputActionCollection2, IDisposable
                     ""action"": ""ChangeJob"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c2db0dc6-1b85-471e-aa7e-cac4e7154d3b"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ChangeLeader"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -165,6 +185,7 @@ public partial class @GameInputs : IInputActionCollection2, IDisposable
         m_Gameplay_Horizontal = m_Gameplay.FindAction("Horizontal", throwIfNotFound: true);
         m_Gameplay_Vertical = m_Gameplay.FindAction("Vertical", throwIfNotFound: true);
         m_Gameplay_ChangeJob = m_Gameplay.FindAction("ChangeJob", throwIfNotFound: true);
+        m_Gameplay_ChangeLeader = m_Gameplay.FindAction("ChangeLeader", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -227,6 +248,7 @@ public partial class @GameInputs : IInputActionCollection2, IDisposable
     private readonly InputAction m_Gameplay_Horizontal;
     private readonly InputAction m_Gameplay_Vertical;
     private readonly InputAction m_Gameplay_ChangeJob;
+    private readonly InputAction m_Gameplay_ChangeLeader;
     public struct GameplayActions
     {
         private @GameInputs m_Wrapper;
@@ -234,6 +256,7 @@ public partial class @GameInputs : IInputActionCollection2, IDisposable
         public InputAction @Horizontal => m_Wrapper.m_Gameplay_Horizontal;
         public InputAction @Vertical => m_Wrapper.m_Gameplay_Vertical;
         public InputAction @ChangeJob => m_Wrapper.m_Gameplay_ChangeJob;
+        public InputAction @ChangeLeader => m_Wrapper.m_Gameplay_ChangeLeader;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -252,6 +275,9 @@ public partial class @GameInputs : IInputActionCollection2, IDisposable
                 @ChangeJob.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnChangeJob;
                 @ChangeJob.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnChangeJob;
                 @ChangeJob.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnChangeJob;
+                @ChangeLeader.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnChangeLeader;
+                @ChangeLeader.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnChangeLeader;
+                @ChangeLeader.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnChangeLeader;
             }
             m_Wrapper.m_GameplayActionsCallbackInterface = instance;
             if (instance != null)
@@ -265,6 +291,9 @@ public partial class @GameInputs : IInputActionCollection2, IDisposable
                 @ChangeJob.started += instance.OnChangeJob;
                 @ChangeJob.performed += instance.OnChangeJob;
                 @ChangeJob.canceled += instance.OnChangeJob;
+                @ChangeLeader.started += instance.OnChangeLeader;
+                @ChangeLeader.performed += instance.OnChangeLeader;
+                @ChangeLeader.canceled += instance.OnChangeLeader;
             }
         }
     }
@@ -283,5 +312,6 @@ public partial class @GameInputs : IInputActionCollection2, IDisposable
         void OnHorizontal(InputAction.CallbackContext context);
         void OnVertical(InputAction.CallbackContext context);
         void OnChangeJob(InputAction.CallbackContext context);
+        void OnChangeLeader(InputAction.CallbackContext context);
     }
 }

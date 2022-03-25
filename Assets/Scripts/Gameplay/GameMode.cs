@@ -34,4 +34,12 @@ public class GameMode : MonoBehaviour
     public Transform GetPartyLeader => partyQueue.Peek();
 
     public bool CompareToLeader(Transform leader) => GetPartyLeader.Equals(leader);
+
+    public void ChangeLeader(Transform hero)
+    {
+        if(CompareToLeader(hero))
+        {
+            partyQueue.Enqueue(partyQueue.Dequeue());
+        }
+    }
 }
