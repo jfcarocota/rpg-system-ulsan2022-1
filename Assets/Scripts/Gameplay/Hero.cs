@@ -54,6 +54,8 @@ public class Hero : Character, IHostile
             transform.Translate(inputsController.Axis.normalized.magnitude * Vector3.forward * moveSpeed * Time.deltaTime);
             FacingDirection();
             movementValue = leader.IsMoving ? 1 : 0f;
+
+            Gamemanager.Instance.CurrentGameMode.GetGameUI.Health = health * 100f / maxHealth;
         }
         else
         {

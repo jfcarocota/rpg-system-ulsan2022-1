@@ -7,14 +7,16 @@ using UnityEditor.Animations;
 public class GameMode : MonoBehaviour
 {
     [SerializeField]
-    List<Transform> party;
-    Queue<Transform> partyQueue;
-    CinemachineVirtualCamera pCamera;
+    private List<Transform> party;
+    private Queue<Transform> partyQueue;
+    private CinemachineVirtualCamera pCamera;
+    private GameUI _gameUI;
 
     // Start is called before the first frame update
     IEnumerator Start()
     {
         pCamera = GameObject.FindGameObjectWithTag("Pcamera").GetComponent<CinemachineVirtualCamera>();
+        _gameUI = GameObject.FindWithTag("UI").GetComponent<GameUI>();
         while(true)
         {
             if(Gamemanager.Instance)
@@ -33,6 +35,8 @@ public class GameMode : MonoBehaviour
     {
         
     }
+
+    public GameUI GetGameUI => _gameUI;
 
     public Transform GetPartyLeader => partyQueue.Peek();
 

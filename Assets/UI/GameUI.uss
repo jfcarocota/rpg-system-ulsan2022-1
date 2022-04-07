@@ -1,12 +1,9 @@
-VisualElement {
-}
-
 .partyContainer {
     align-items: stretch;
     background-color: rgba(117, 186, 250, 0.14);
-    position: absolute;
+    position: relative;
     bottom: 0;
-    width: 100%;
+    width: 90%;
     flex-grow: 1;
     flex-direction: row;
     justify-content: center;
@@ -18,15 +15,15 @@ VisualElement {
     border-right-width: 2px;
     border-top-width: 2px;
     border-bottom-width: 2px;
-    border-left-color: rgba(255, 255, 255, 255);
-    border-right-color: rgba(255, 255, 255, 255);
-    border-top-color: rgba(255, 255, 255, 255);
-    border-bottom-color: rgba(255, 255, 255, 255);
+    border-left-color: rgb(255, 255, 255);
+    border-right-color: rgb(255, 255, 255);
+    border-top-color: rgb(255, 255, 255);
+    border-bottom-color: rgb(255, 255, 255);
 }
 
 .title {
     background-color: rgba(0, 0, 0, 0);
-    color: rgba(255, 255, 255, 255);
+    color: rgb(255, 255, 255);
     font-size: 24px;
 }
 
@@ -41,4 +38,18 @@ VisualElement {
     margin-bottom: 20px;
     margin-left: 50px;
     margin-right: 50px;
+}
+
+.container {
+    position: absolute;
+    width: 100%;
+    align-items: center;
+    bottom: 20px;
+}
+
+.health {
+    background-color: rgba(0, 0, 0, 255);
+}
+
+.unity-progress-bar {
 }
