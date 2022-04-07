@@ -54,15 +54,12 @@ public class InputsController : MonoBehaviour
 
     void PassLeaderToNextone()
     {
-        hero.GetAgent.enabled = false;
         Gamemanager.Instance.CurrentGameMode.ChangeLeader(transform);
-        Hero heroLeader = Gamemanager.Instance.CurrentGameMode.GetPartyLeader.GetComponent<Hero>();
-        heroLeader.GetAgent.enabled = true;
-        heroLeader.GetInputsController.enabled = true;
-        this.enabled = false;
     }
 
     public GameInputs GetGameinputs => gameInputs;
 
-    public Vector3 Axis => new Vector3(gameInputs.Gameplay.Horizontal.ReadValue<float>(), 0f, gameInputs.Gameplay.Vertical.ReadValue<float>());
+    public Vector3 Axis => new Vector3(Direction.x, 0f, Direction.y);
+
+    public Vector2 Direction => gameInputs.Gameplay.Direction.ReadValue<Vector2>();
 }

@@ -62,6 +62,15 @@ public partial class @GameInputs : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Direction"",
+                    ""type"": ""Value"",
+                    ""id"": ""b21eb490-fb14-4c2d-bd53-85b9bf95b2e4"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -152,6 +161,61 @@ public partial class @GameInputs : IInputActionCollection2, IDisposable
                     ""action"": ""ChangeLeader"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""wasd"",
+                    ""id"": ""84b978f0-15bf-44d5-9861-adbb8c5e5ba4"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Direction"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""Up"",
+                    ""id"": ""1c5a13bd-a404-4809-8b94-68873f7b4941"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Direction"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""Down"",
+                    ""id"": ""b72f9951-8124-477e-a775-41fcda7d137c"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Direction"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""Left"",
+                    ""id"": ""1ad0e203-0619-4ddf-95ab-c1221d887598"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Direction"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""Right"",
+                    ""id"": ""1b223cf8-e870-487c-b280-9e3b17831b94"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Direction"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
                 }
             ]
         }
@@ -186,6 +250,7 @@ public partial class @GameInputs : IInputActionCollection2, IDisposable
         m_Gameplay_Vertical = m_Gameplay.FindAction("Vertical", throwIfNotFound: true);
         m_Gameplay_ChangeJob = m_Gameplay.FindAction("ChangeJob", throwIfNotFound: true);
         m_Gameplay_ChangeLeader = m_Gameplay.FindAction("ChangeLeader", throwIfNotFound: true);
+        m_Gameplay_Direction = m_Gameplay.FindAction("Direction", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -249,6 +314,7 @@ public partial class @GameInputs : IInputActionCollection2, IDisposable
     private readonly InputAction m_Gameplay_Vertical;
     private readonly InputAction m_Gameplay_ChangeJob;
     private readonly InputAction m_Gameplay_ChangeLeader;
+    private readonly InputAction m_Gameplay_Direction;
     public struct GameplayActions
     {
         private @GameInputs m_Wrapper;
@@ -257,6 +323,7 @@ public partial class @GameInputs : IInputActionCollection2, IDisposable
         public InputAction @Vertical => m_Wrapper.m_Gameplay_Vertical;
         public InputAction @ChangeJob => m_Wrapper.m_Gameplay_ChangeJob;
         public InputAction @ChangeLeader => m_Wrapper.m_Gameplay_ChangeLeader;
+        public InputAction @Direction => m_Wrapper.m_Gameplay_Direction;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -278,6 +345,9 @@ public partial class @GameInputs : IInputActionCollection2, IDisposable
                 @ChangeLeader.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnChangeLeader;
                 @ChangeLeader.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnChangeLeader;
                 @ChangeLeader.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnChangeLeader;
+                @Direction.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnDirection;
+                @Direction.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnDirection;
+                @Direction.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnDirection;
             }
             m_Wrapper.m_GameplayActionsCallbackInterface = instance;
             if (instance != null)
@@ -294,6 +364,9 @@ public partial class @GameInputs : IInputActionCollection2, IDisposable
                 @ChangeLeader.started += instance.OnChangeLeader;
                 @ChangeLeader.performed += instance.OnChangeLeader;
                 @ChangeLeader.canceled += instance.OnChangeLeader;
+                @Direction.started += instance.OnDirection;
+                @Direction.performed += instance.OnDirection;
+                @Direction.canceled += instance.OnDirection;
             }
         }
     }
@@ -313,5 +386,6 @@ public partial class @GameInputs : IInputActionCollection2, IDisposable
         void OnVertical(InputAction.CallbackContext context);
         void OnChangeJob(InputAction.CallbackContext context);
         void OnChangeLeader(InputAction.CallbackContext context);
+        void OnDirection(InputAction.CallbackContext context);
     }
 }
