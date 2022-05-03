@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class InputsController : MonoBehaviour
 {
@@ -16,19 +17,25 @@ public class InputsController : MonoBehaviour
     void OnEnable()
     {
         gameInputs.Enable();
+        gameInputs.Gameplay.ChangeJob.performed += OnHeroJobChanged;
+        gameInputs.Gameplay.ChangeLeader.performed += OnLeaderChanged;
     }
 
     void OnDisable()
     {
         gameInputs.Disable();
+        gameInputs.Gameplay.ChangeJob.performed -= OnHeroJobChanged;
+        gameInputs.Gameplay.ChangeLeader.performed -= OnLeaderChanged;
     }
+
+    private void OnHeroJobChanged(InputAction.CallbackContext ctx) => ChangeJob(hero.GetJobsOptions);
+    private void OnLeaderChanged(InputAction.CallbackContext ctx) => PassLeaderToNextone();
 
     void Start()
     {
         hero = GetComponent<Hero>();
         ChangeJob(hero.GetJobsOptions);
-        gameInputs.Gameplay.ChangeJob.performed += _=> ChangeJob(hero.GetJobsOptions);
-        gameInputs.Gameplay.ChangeLeader.performed += _=> PassLeaderToNextone();
+       
     }
 
     void ChangeJob(JobsOptions job)

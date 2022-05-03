@@ -34,12 +34,12 @@
                 },
                 {
                     "name": "ChangeLeader",
-                    "type": "Value",
+                    "type": "Button",
                     "id": "9abb4420-5790-4465-9f73-ee2773e9c4b9",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": true
+                    "initialStateCheck": false
                 },
                 {
                     "name": "Direction",
@@ -124,7 +124,7 @@
                     "path": "<Keyboard>/enter",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "PC",
                     "action": "ChangeJob",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -135,7 +135,7 @@
                     "path": "<Keyboard>/space",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "PC",
                     "action": "ChangeLeader",
                     "isComposite": false,
                     "isPartOfComposite": false
