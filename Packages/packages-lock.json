@@ -1,5 +1,6 @@
 {
   "dependencies": {
+<<<<<<< Updated upstream
     "com.unity.addressables": {
       "version": "1.19.19",
       "depth": 1,
@@ -23,6 +24,8 @@
       },
       "url": "https://packages.unity.com"
     },
+=======
+>>>>>>> Stashed changes
     "com.unity.burst": {
       "version": "1.6.5",
       "depth": 1,
@@ -127,6 +130,7 @@
         "com.unity.render-pipelines.core": "12.1.6",
         "com.unity.shadergraph": "12.1.6"
       }
+<<<<<<< Updated upstream
     },
     "com.unity.scriptablebuildpipeline": {
       "version": "1.19.6",
@@ -134,6 +138,8 @@
       "source": "registry",
       "dependencies": {},
       "url": "https://packages.unity.com"
+=======
+>>>>>>> Stashed changes
     },
     "com.unity.searcher": {
       "version": "4.9.1",
@@ -155,6 +161,7 @@
       "version": "12.1.6",
       "depth": 1,
       "source": "builtin",
+<<<<<<< Updated upstream
       "dependencies": {
         "com.unity.render-pipelines.core": "12.1.6",
         "com.unity.searcher": "4.9.1"
@@ -169,6 +176,12 @@
         "com.unity.modules.terrainphysics": "1.0.0"
       },
       "url": "https://packages.unity.com"
+=======
+      "dependencies": {
+        "com.unity.render-pipelines.core": "12.1.6",
+        "com.unity.searcher": "4.9.1"
+      }
+>>>>>>> Stashed changes
     },
     "com.unity.test-framework": {
       "version": "1.1.31",
