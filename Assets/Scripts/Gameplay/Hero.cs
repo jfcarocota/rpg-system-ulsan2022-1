@@ -21,6 +21,8 @@ public class Hero : Character, IHostile
     Vector2 minMaxAngle;
     protected float movementValue;
     protected InputsController inputsController;
+    [SerializeField]
+    private float _rotSpeed = 20f;
 
     new void Awake()
     {
@@ -69,7 +71,7 @@ public class Hero : Character, IHostile
 
     protected void LateUpdate()
     {
-
+        anim.SetFloat("moveSpeedMultiplier", Mathf.Clamp01(Mathf.Abs(inputsController.Axis.magnitude)));
     }
 
     public void Attack()
@@ -92,7 +94,7 @@ public class Hero : Character, IHostile
     {
         if(IsMoving)
         {
-            transform.rotation = RotationDirection;
+            transform.rotation = Quaternion.Lerp(transform.rotation, RotationDirection, Time.deltaTime * _rotSpeed);
         }
     }
 
@@ -105,5 +107,6 @@ public class Hero : Character, IHostile
     public NavMeshAgent GetAgent => agent;
 
     public InputsController GetInputsController => inputsController;
+    public float GetMovementValue => Mathf.Abs(movementValue);
 
 }

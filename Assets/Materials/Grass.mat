@@ -23,6 +23,8 @@ Material:
   m_Name: Grass
   m_Shader: {fileID: 4800000, guid: 653e87c604b4db54191c239b676dafe7, type: 3}
   m_ValidKeywords:
+  - GRASS_FOLLOW_SURFACE_NORMAL
+  - GRASS_RANDOM_DIR
   - SIMPLE_GRASS
   m_InvalidKeywords:
   - 
@@ -76,7 +78,7 @@ Material:
     - _AtlasOffset02: 0.01
     - _AtlasOffset03: 0.01
     - _BurnCutoff: 0.05
-    - _CullMode: 0
+    - _CullMode: 2
     - _DensityFalloffPower: 0.4
     - _DensityFalloffScale: 0.08
     - _DensityFalloffStart: 5.08
@@ -127,14 +129,14 @@ Material:
     - _Width01: 0.1
     - _Width02: 0.1
     - _Width03: 0.1
-    - _WindRotation: 0
+    - _WindRotation: 0.55
     m_Colors:
-    - _Color00: {r: 0.5, g: 0.7, b: 0.29999998, a: 1}
+    - _Color00: {r: 0.5294118, g: 0.83921576, b: 0.5019608, a: 1}
     - _Color01: {r: 0.5, g: 0.7, b: 0.29999998, a: 1}
     - _Color02: {r: 0.5, g: 0.7, b: 0.29999998, a: 1}
     - _Color03: {r: 0.5, g: 0.7, b: 0.29999998, a: 1}
     - _DensityValues: {r: 1, g: 1, b: 1, a: 1}
-    - _GrassFloorColor: {r: 0.34999996, g: 0.34999996, b: 0.34999996, a: 1}
+    - _GrassFloorColor: {r: 0, g: 0, b: 0, a: 0}
     - _SecColor00: {r: 0.19999996, g: 0.5, b: 0.14999998, a: 1}
     - _SecColor01: {r: 0.19999996, g: 0.5, b: 0.14999998, a: 1}
     - _SecColor02: {r: 0.19999996, g: 0.5, b: 0.14999998, a: 1}
